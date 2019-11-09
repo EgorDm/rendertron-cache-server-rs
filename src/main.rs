@@ -11,6 +11,7 @@ fn main() {
     init_vars();
     let addr = *RENDERTRON_CACHE_SOCKET;
 
+    info!("Starting server on: {} using resource {}", &addr, *RENDERTRON_CACHE_RENDERTRON_URL);
     hyper::rt::run(future::lazy(move || {
         let cache_server = CacheServer::new();
 
@@ -21,7 +22,7 @@ fn main() {
                     service(&cache_server, req)
                 })
             })
-            .map_err(|e| eprintln!("server error: {}", e));
+            .map_err(|e| error!("server error: {}", e));
 
         server
     }))
@@ -43,14 +44,14 @@ fn service(server: &CacheServer, req: Request<Body>) -> ResponseFuture {
         Err(e) => {
             error!("{} {} -> {}", req.method().as_str(), req.uri(), e);
 
-            match e {
+            /*match e {
                 Error::RequestError(h, e) => {
-                    //error!("{} {} -> {}", req.method().as_str(), req.uri(), h, e.to_string());
+                    error!("{} {} -> {}", req.method().as_str(), req.uri(), h, e.to_string());
                 },
                 _ => {
-                    //error!("{} {} -> {}", req.method().as_str(), req.uri(), e);
+                    error!("{} {} -> {}", req.method().as_str(), req.uri(), e);
                 }
-            }
+            }*/
 
             Response::builder()
                 .status(StatusCode::INTERNAL_SERVER_ERROR)

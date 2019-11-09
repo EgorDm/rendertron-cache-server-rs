@@ -1,7 +1,6 @@
 use std::collections::HashMap;
-use std::{fs::File, io::Write, path::PathBuf};
+use std::{path::PathBuf, io::Write};
 use serde::{Serialize, Deserialize};
-use fs2::FileExt;
 use crate::*;
 
 #[derive(Debug, Clone, PartialEq, Eq, new, Serialize, Deserialize)]

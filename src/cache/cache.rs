@@ -22,13 +22,13 @@ impl Cache {
 
 	pub fn retrieve(&self, doc: &Document, q: &Query) -> Result<Content> {
 		if doc.exists() {
-			info!("Cache Hit: {}", q.url.to_string());
+			debug!("Cache Hit: {}", q.url.to_string());
 
 			let mut content = doc.read()?;
 			content.headers.insert("Rendertron-Cached".to_string(), "1".to_string());
 			Ok(content)
 		} else {
-			info!("Cache Miss: {}", q.url.to_string());
+			debug!("Cache Miss: {}", q.url.to_string());
 
 			let mut content = self.resource.retrieve(doc, q)?;
 			content.headers.insert("Rendertron-Cached".to_string(), "0".to_string());
@@ -37,7 +37,7 @@ impl Cache {
 	}
 
 	pub fn refresh(&self, doc: &Document, q: &Query) -> Result<Content> {
-		info!("Refreshing cache: {}", q.url.to_string());
+		debug!("Refreshing cache: {}", q.url.to_string());
 
 		self.delete(doc)?;
 		self.retrieve(doc, q)

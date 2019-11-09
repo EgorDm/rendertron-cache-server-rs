@@ -1,7 +1,6 @@
-use reqwest::{Client, Method};
+use reqwest::{Client};
 use crate::*;
 use log::{debug, info};
-use std::time::Duration;
 use hyper::{Uri, HeaderMap};
 
 #[derive(Debug, Clone)]

@@ -1,0 +1,40 @@
+version: '3.2'
+services:
+  rcs:
+    build:
+      context: .
+    image: rcs
+    container_name: rcs
+    restart: always
+    environment:
+      RENDERTRON_CACHE_RENDERTRON_URL: http://172.18.16.100:3000
+    env_file:
+      - .env.docker
+    volumes:
+      - type: bind
+        source: $RENDERTRON_CACHE_ROOT
+        target: /home/rendertron_cache_server/cache
+    networks:
+      rendertron_net:
+        ipv4_address: 172.18.16.200
+
+  rendertron:
+    image: ammobindotca/rendertron
+    container_name: rendertron
+    restart: always
+    ports:
+      - 3000:3000
+      - 8080:8080
+    networks:
+      rendertron_net:
+        ipv4_address: 172.18.16.100
+
+networks:
+  rendertron_net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.16.0/24

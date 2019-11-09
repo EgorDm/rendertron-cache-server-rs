@@ -1,7 +1,7 @@
 use hyper::HeaderMap;
 use hyper::http::header::HeaderName;
 use std::collections::HashMap;
-use std::{str::FromStr, path::Path, fs::File, io::{Read, Write}};
+use std::{str::FromStr, path::Path, fs::File, io::{Read}};
 use crate::Result;
 use fs2::FileExt;
 

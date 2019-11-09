@@ -3,7 +3,6 @@ use std::collections::HashSet;
 use std::net::{SocketAddr};
 use std::{path::PathBuf};
 use hyper::Uri;
-use crate::Error;
 
 fn read_env<T: FromStr, D: Into<T>>(key: &str, default: D) -> T {
 	std::env::var(key).ok()
@@ -35,11 +34,11 @@ pub fn init_vars() {
 
 lazy_static! {
 pub static ref RENDERTRON_CACHE_DEBUG: bool = read_env("RENDERTRON_CACHE_DEBUG", false);
-pub static ref RENDERTRON_CACHE_SOCKET: SocketAddr = env_str("RENDERTRON_CACHE_SOCKET", "127.0.0.1:5000").as_str().parse().unwrap();
+pub static ref RENDERTRON_CACHE_SOCKET: SocketAddr = env_str("RENDERTRON_CACHE_SOCKET", "0.0.0.0:5000").as_str().parse().unwrap();
 pub static ref RENDERTRON_CACHE_LOCK_TIMEOUT: i32 = read_env("RENDERTRON_CACHE_LOCK_TIMEOUT", 1000);
 pub static ref RENDERTRON_CACHE_ROOT: PathBuf = PathBuf::from_str(&env_str("RENDERTRON_CACHE_ROOT", "./cache")).unwrap();
 pub static ref RENDERTRON_CACHE_FILE_SUFFIX: String = env_str("RENDERTRON_CACHE_FILE_SUFFIX", ".json");
-pub static ref RENDERTRON_CACHE_RENDERTRON_URL: Uri = Uri::from_str(&env_str("RENDERTRON_CACHE_RESOURCE_URL", "http://127.0.0.1")).unwrap();
+pub static ref RENDERTRON_CACHE_RENDERTRON_URL: Uri = Uri::from_str(&env_str("RENDERTRON_CACHE_RENDERTRON_URL", "http://127.0.0.1")).unwrap();
 pub static ref RENDERTRON_CACHE_HEADER_REQUEST_BLACKLIST: HashSet<String>
 	= env_str("RENDERTRON_CACHE_HEADER_REQUEST_BLACKLIST", "")
 	.split(',').map(str::to_string).collect();

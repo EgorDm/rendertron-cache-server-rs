@@ -1,4 +1,4 @@
 #!/bin/sh
 sudo docker-compose up -d
-sudo docker run -ti --network="host" --rm alpine/bombardier -c 200 -d 10s -l "http://172.18.16.200:5000/render/www.google.com/"
+d run --network host --rm skandyla/wrk -t12 -c400 -d30s http://172.18.16.200:5000/render/http://www.google.com/
 sudo docker-compose down
